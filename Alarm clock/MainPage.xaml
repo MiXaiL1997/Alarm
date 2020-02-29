@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:fab="clr-namespace:Refractored.FabControl;assembly=Refractored.FabControl"
+       xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+       xmlns:local="clr-namespace:Alarm_clock"
+       mc:Ignorable="d"
+             x:Class="Alarm_clock.MainPage" >
+    <Shell.Resources>
+        <ResourceDictionary>
+            <local:TextColorConverter x:Key="ColorConverter"/>
+        </ResourceDictionary>
+    </Shell.Resources>
+    <TabBar>
+        <Tab x:Name="THome" Title="Будильник" Icon="clock_alarm.png">
+            
+            <ShellContent>
+                <ContentPage Title="Главная" x:Name="CPHome">
+                    <ContentPage.ToolbarItems>
+                        <ToolbarItem IconImageSource="add.png" Clicked="FAB_Click"/>
+                        <ToolbarItem Text="Удалить" Order="Secondary" Priority="0" Clicked="ToolbarItem_Clicked"/>
+                    </ContentPage.ToolbarItems>
+                    <StackLayout>
+                        <ListView x:Name="clocksList"
+                            ItemsSource="{Binding Cl}"
+                            HasUnevenRows="True" Margin="0, 0, 0, 0"             
+                            >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <StackLayout Orientation="Horizontal" Spacing="170">
+                                                <Label Text="{Binding Time}" FontSize="38" Margin="20" TextColor="{Binding Path=Toggled, Converter={StaticResource Key=ColorConverter}}"/>
+                                                <Switch VerticalOptions="CenterAndExpand" HorizontalOptions="Center" IsToggled="{Binding Toggled}" Margin="20" Toggled="Switch_Toggled"/>
+                                            </StackLayout>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <TimePicker x:Name="AlarmPicker" IsVisible="False" Unfocused="AlarmPicker_Unfocused" PropertyChanged="AlarmPicker_PropertyChanged"/>
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+        <Tab Title="Настройки" Icon="Black_Settings.png">
+            <ShellContent Title="Настройки">
+                <ContentPage Title="Настройки">
+                    <StackLayout>
+                        <Label Text="Берлин" />
+                    </StackLayout>
+                </ContentPage>
+            </ShellContent>
+        </Tab>
+    </TabBar>
+    
+</Shell>
