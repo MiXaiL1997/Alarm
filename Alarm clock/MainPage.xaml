@@ -15,27 +15,47 @@
         </ResourceDictionary>
     </Shell.Resources>
     <TabBar>
-        <Tab x:Name="THome" Title="Будильник" Icon="clock_alarm.png">
+        <Tab x:Name="THome" Title="Будильник" Icon="alarm.png">
             
             <ShellContent>
-                <ContentPage Title="Главная" x:Name="CPHome">
+                <ContentPage Title="Будильник" x:Name="CPHome">
                     <ContentPage.ToolbarItems>
-                        <ToolbarItem IconImageSource="add.png" Clicked="FAB_Click"/>
+                        <ToolbarItem IconImageSource="alarmadd.png" Clicked="FAB_Click"/>
                         <ToolbarItem Text="Удалить" Order="Secondary" Priority="0" Clicked="ToolbarItem_Clicked"/>
                     </ContentPage.ToolbarItems>
                     <StackLayout>
                         <ListView x:Name="clocksList"
                             ItemsSource="{Binding Cl}"
-                            HasUnevenRows="True" Margin="0, 0, 0, 0"             
+                            HasUnevenRows="True" Margin="0, 0, 0, 0"
+                            SelectionMode="None"
+                            
                             >
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
                                         <ViewCell.View>
-                                            <StackLayout Orientation="Horizontal" Spacing="170">
-                                                <Label Text="{Binding Time}" FontSize="38" Margin="20" TextColor="{Binding Path=Toggled, Converter={StaticResource Key=ColorConverter}}"/>
-                                                <Switch VerticalOptions="CenterAndExpand" HorizontalOptions="Center" IsToggled="{Binding Toggled}" Margin="20" Toggled="Switch_Toggled"/>
+                                            <StackLayout Orientation="Vertical">
+                                                <StackLayout Orientation="Horizontal" Spacing="212" Margin="20, 20, 20, 5">
+                                                    <Label Text="{Binding Time}" FontSize="38"  TextColor="{Binding Path=Toggled, Converter={StaticResource Key=ColorConverter}}"/>
+                                                    <Switch VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Margin="0,3,0,0" IsToggled="{Binding Toggled}" Toggled="Switch_Toggled"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" Spacing="265" Margin="20, 5, 20, 5">
+                                                    <Label Text="Repeat" Margin="2,5,0,0" FontAttributes="Bold"/>
+                                                    <ImageButton Source="expandmore.png" BackgroundColor="Transparent" Margin="0,0,5,0" Clicked="ImageButton_Clicked"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" Spacing="10" Margin="20, 5, 20, 5" IsVisible="False">
+                                                    <CheckBox Margin="2,5,0,0" Color="Black"/>
+                                                    <Label Text="Повторять" Margin="0,5,5,0"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" Spacing="265" Margin="20, 5, 20, 5" IsVisible="False">
+                                                    <Button Text="По умолчанию" ImageSource="notif.png" BackgroundColor="Transparent"/>
+                                                </StackLayout>
+                                                <StackLayout Orientation="Horizontal" Spacing="10" Margin="20, 5, 20, 20" IsVisible="False">
+                                                    <Image Source="label.png"/>
+                                                    <Entry Text="По умолчанию" BackgroundColor="Transparent"/>
+                                                </StackLayout>
                                             </StackLayout>
+                                            
                                         </ViewCell.View>
                                     </ViewCell>
                                 </DataTemplate>
@@ -46,7 +66,7 @@
                 </ContentPage>
             </ShellContent>
         </Tab>
-        <Tab Title="Настройки" Icon="Black_Settings.png">
+        <Tab Title="Настройки" Icon="settings.png">
             <ShellContent Title="Настройки">
                 <ContentPage Title="Настройки">
                     <StackLayout>
