@@ -20,7 +20,16 @@ namespace Alarm_clock
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "clocks.json"))
             {
                 var jText = File.ReadAllText(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "clocks.json", Encoding.UTF8);
-                Clocks = JsonConvert.DeserializeObject<ObservableCollection<Clocks>>(jText);
+                if (jText.Equals("") || jText.Equals(null) || jText.Equals("null"))
+                {
+                    Clocks = new ObservableCollection<Clocks>();
+                }
+                else
+                {
+                    //Clocks = JsonConvert.DeserializeObject<ObservableCollection<Clocks>>(jText);
+                    Clocks = new ObservableCollection<Clocks>();
+                }
+                
             }
             else
             {
@@ -38,7 +47,7 @@ namespace Alarm_clock
         {
             var Root = (MainPage as MainPage).Cl;
             var jRoot = JsonConvert.SerializeObject(Root);
-            File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "clocks.json", jRoot);
+            //File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "clocks.json", jRoot);
         }
 
         protected override void OnResume()
