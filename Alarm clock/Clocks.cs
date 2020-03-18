@@ -25,12 +25,13 @@ namespace Alarm_clock
 
         }      
         public string Descrption { get; set; }
-        public bool Toggled { get; set; }
+        public bool IsSetAlarm { get; set; }
         //public bool Repeat { get; set; }
         public AlarmManager manager;
         PendingIntent pintent;
         public void SetAlarm(PendingIntent pintent)
         {
+            IsSetAlarm = true;
             this.pintent = pintent;
             manager = (AlarmManager)Application.Context.GetSystemService(Context.AlarmService);
             Calendar calendar = Calendar.Instance;
@@ -44,6 +45,7 @@ namespace Alarm_clock
             if (pintent == null)
                 return;
             manager.Cancel(pintent);
+            IsSetAlarm = false;
         }
     }
 

@@ -40,7 +40,7 @@ namespace Alarm_clock
 
             Ringtone r = RingtoneManager.GetRingtone(context, uri);
             r.Play();
-            var Page = (App)App.Current;
+            var Page = (App)Xamarin.Forms.Application.Current;
             var MainPage = (MainPage)Page.MainPage;
             MainPage.UpdateToogles();
 

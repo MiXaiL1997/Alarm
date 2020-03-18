@@ -45,7 +45,7 @@ namespace Alarm_clock
 
         protected override void OnSleep()
         {
-            var Root = (MainPage as MainPage).Cl;
+            var Root = (MainPage as MainPage).Clocks;
             var jRoot = JsonConvert.SerializeObject(Root);
             //File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "clocks.json", jRoot);
         }

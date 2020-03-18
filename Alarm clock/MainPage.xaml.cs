@@ -13,13 +13,14 @@ namespace Alarm_clock
 {
     public partial class MainPage : Shell
     {
-        public ObservableCollection<Clocks> Cl { get; set; }
+        public ObservableCollection<Clocks> Clocks => Cl;
+        private ObservableCollection<Clocks> Cl;
         public MainPage()
         {
             InitializeComponent();
-            Cl = App.Clocks;
-            //this.BindingContext = this;
-            clocksList.ItemsSource = Cl;
+            Cl = new ObservableCollection<Clocks>();
+            this.BindingContext = this;
+            //clocksList.ItemsSource = Cl;
             
         }
 
@@ -36,11 +37,12 @@ namespace Alarm_clock
             //clocksList.ItemsSource = null;
             for (int i = 0; i < Cl.Count; i++)
             {
-                if (Cl[i].Toggled == true)
+                if (Cl[i].IsSetAlarm == true)
                 {
+                    
                     var Item = Cl[i];
                     Cl.RemoveAt(i);
-                    Item.Toggled = false;
+                    Item.IsSetAlarm = false;
                     Cl.Insert(i, Item);
                 }
             }
@@ -55,7 +57,7 @@ namespace Alarm_clock
 
         private void ToolbarItem_Clicked(object sender, EventArgs e)
         {
-
+            UpdateToogles();
         }
 
         private void AlarmPicker_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -65,11 +67,11 @@ namespace Alarm_clock
                 TimePicker picker = (TimePicker)sender;
                 Clocks Item = new Clocks();
                 Item.SetTime(picker.Time);
-                Item.Toggled = true;
+                Item.IsSetAlarm = true;
                 Cl.Add(Item);
-                //Cl = new ObservableCollection<Clocks>(Cl.OrderBy(x => x.Time));
-                //clocksList.ItemsSource = null;
-                //clocksList.ItemsSource = Cl;
+                
+
+                
             }
             
         }
@@ -82,7 +84,7 @@ namespace Alarm_clock
                 Switch sw = (Switch)sender;
                 var Clocks = (Clocks)sw.BindingContext;
                 Intent intent = new Intent(Android.App.Application.Context, typeof(AlarmRecevier));
-                PendingIntent intent1 = PendingIntent.GetBroadcast(Android.App.Application.Context, Cl.Count, intent, PendingIntentFlags.OneShot);
+                PendingIntent intent1 = PendingIntent.GetBroadcast(Android.App.Application.Context, Cl.Count, intent, PendingIntentFlags.UpdateCurrent);
                 Clocks.SetAlarm(intent1);
                 var p = (StackLayout)sw.Parent;
                 var c = (Label)p.Children[0];

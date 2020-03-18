@@ -14,6 +14,7 @@
             <local:TextColorConverter x:Key="ColorConverter"/>
             <local:RepeatConverter x:Key="RepConverter"/>
             <local:Spacing2Converter x:Key="S2Conv"/>
+            <local:ToggledConverter x:Key="TConv"/>
         </ResourceDictionary>
     </Shell.Resources>
     <TabBar>
@@ -23,11 +24,11 @@
                 <ContentPage Title="Будильник" x:Name="CPHome">
                     <ContentPage.ToolbarItems>
                         <ToolbarItem IconImageSource="alarmadd.png" Clicked="FAB_Click"/>
-                        <ToolbarItem Text="Удалить" Order="Secondary" Priority="0" Clicked="ToolbarItem_Clicked"/>
+                        <ToolbarItem Text="AllOff" Order="Secondary" Priority="0" Clicked="ToolbarItem_Clicked"/>
                     </ContentPage.ToolbarItems>
                     <StackLayout>
                         <ListView x:Name="clocksList"
-                            
+                            ItemsSource="{Binding Clocks}"
                             HasUnevenRows="True" Margin="0, 0, 0, 0"
                             SelectionMode="None"
                             
@@ -38,16 +39,16 @@
                                         <ViewCell.View>
                                             <StackLayout Orientation="Vertical">
                                                 <StackLayout Orientation="Horizontal" Spacing="212" Margin="20, 20, 20, 5">
-                                                    <Label Text="{Binding Time}" FontSize="38"  TextColor="{Binding Path=Toggled, Converter={StaticResource Key=ColorConverter}}"/>
-                                                    <Switch VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Margin="0,3,0,0" Toggled="Switch_Toggled"/>
+                                                    <Label Text="{Binding Time}" FontSize="38"  TextColor="{Binding Path=IsSetAlarm, Converter={StaticResource Key=ColorConverter}}"/>
+                                                    <Switch IsToggled="{Binding Path=IsSetAlarm}" Margin="0,3,0,0" Toggled="Switch_Toggled"/>
                                                 </StackLayout>
-                                                <StackLayout Orientation="Horizontal" Spacing="{Binding Path=Repeat, Converter={StaticResource Key=S2Conv}}" Margin="20, 5, 20, 5">
-                                                    <Label Text="{Binding Path=Repeat, Converter={StaticResource Key=RepConverter}}" Margin="2,5,0,0" FontAttributes="Bold"/>
+                                                <StackLayout Orientation="Horizontal" Margin="20, 5, 20, 5">
+                                                    <Label Text="" Margin="2,5,0,0" FontAttributes="Bold"/>
                                                     <ImageButton Source="expandmore.png" BackgroundColor="Transparent" Margin="0,0,5,0" Clicked="ImageButton_Clicked"/>
                                                 </StackLayout>
                                                 <StackLayout IsVisible="True" HeightRequest="1">
                                                     <StackLayout Orientation="Horizontal" Spacing="10" Margin="20, 5, 20, 5" >
-                                                        <CheckBox Margin="2,5,0,0" Color="Black" CheckedChanged="CheckBox_CheckedChanged" IsChecked="{Binding Repeat}"/>
+                                                        <CheckBox Margin="2,5,0,0" Color="Black" CheckedChanged="CheckBox_CheckedChanged"/>
                                                         <Label Text="Повторять" Margin="0,5,5,0"/>
                                                     </StackLayout>
                                                     <StackLayout Orientation="Horizontal" Spacing="265" Margin="20, 5, 20, 5">
